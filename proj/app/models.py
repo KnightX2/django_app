@@ -30,3 +30,4 @@ class session(models.Model):
     device_info =models.CharField(max_length=400)
 class amer(models.Model):
     hello_name = models.CharField(max_length=300)
+    hi = models.CharField(max_length=100,default="A")
