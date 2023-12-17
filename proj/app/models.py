@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 gender_choices = [
     ("F", "Female"),
     ("M", "Male")
@@ -28,6 +29,21 @@ class session(models.Model):
     logout_time= models.DateTimeField(auto_now=True)
     IP_address=models.GenericIPAddressField()
     device_info =models.CharField(max_length=400)
-class amer(models.Model):
-    hello_name = models.CharField(max_length=300)
-    hi = models.CharField(max_length=100,default="A")
+
+class entry_record (models.Model):
+    entry_record_id = models.BigIntegerField(primary_key = True)
+    reason_for_entry = models.CharField(max_length = 300)
+    entry_date = models.DateTimeField(auto_now_add=True)
+    out_date = models.DateTimeField (auto_now=True)
+    stranger_id = models.ForeignKey(stranger,on_delete=models.CASCADE)
+
+class security_note (models.Model):
+    entry_record_id = models.ForeignKey(entry_record,on_delete=models.CASCADE)
+    date=models.DateField(default=datetime.now)
+    stranger_id = models.ForeignKey(stranger,on_delete=models.CASCADE)
+    reason = models.CharField(max_length = 1000)
+    class Meta:
+        constraints=[
+            models.UniqueConstraint(fields=['entry_record_id','stranger_id'], name = "entry_record_stranger_id")
+        ]
+
