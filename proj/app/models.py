@@ -46,4 +46,12 @@ class security_note (models.Model):
         constraints=[
             models.UniqueConstraint(fields=['entry_record_id','stranger_id'], name = "entry_record_stranger_id")
         ]
+class vehicle (models.Model):
+    vehicle_id=models.BigIntegerField(primary_key= True)
+    state=models.CharField(max_length=100)
+    model=models.CharField(max_length=300)
+    colour=models.CharField(max_length=50)
 
+class stranger_vehicle(models.Model):
+     stranger_id=models.ForeignKey(stranger,on_delete=models.CASCADE)
+     vehicle_id=models.ForeignKey(vehicle,on_delete=models.CASCADE)
